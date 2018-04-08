@@ -16,6 +16,7 @@ After the download, open the *Streamlab Chatbot* program and under the script se
 
 After the installation, it is possible to configure the command using the UI interface in the script tab.
 
-The txt file is saved with all the other Streamlabs txt files, namely `%AppData%\Roaming\Streamlabs\Streamlabs Chatbot\Services\Twitch\Files`
+The txt file is saved with all the other StreamLabs .txt files, namely `%AppData%\Roaming\Streamlabs\Streamlabs Chatbot\Services\Twitch\Files`.
+
 ## License
 MIT license
