@@ -1,0 +1,17 @@
+{
+    "output_file": "settings.json",
+    "message": {
+        "type": "textbox",
+        "value": "win: {} loss: {}",
+        "label": "Messsage",
+        "tooltip": "The message show the strike.",
+        "group": "Advance"
+    },
+    "command": {
+        "type": "textbox",
+        "value": "!strike",
+        "label": "Command",
+        "tooltip": "The name of the command.",
+        "group": "Advance"
+    }
+}
