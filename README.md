@@ -4,10 +4,10 @@ A *Streamlabs Chatbot* command that print the win streak of the hoster on a txt 
 
 Example:
 ```
->> !strike + // increase win by 1
->> !strike - // descrease loss by 1
->> !strike reset // reset count
->> !strike +5 // increase win by 5
+>> !strike +      // increase win by 1
+>> !strike -      // descrease loss by 1
+>> !strike reset  // reset count
+>> !strike +5     // increase win by 5
 ```
 
 ## Installation
