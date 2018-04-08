@@ -15,7 +15,7 @@ clr.AddReference("IronPython.Modules.dll")
 # [Required] Script Information
 #---------------------------------------
 ScriptName = "WinStreak"
-Website = ""
+Website = "https://github.com/lucarin91/winstreak-streamlabs"
 Description = "Manage the host win streak on OBS"
 Creator = "lucarin91"
 Version = "1.0.0"
