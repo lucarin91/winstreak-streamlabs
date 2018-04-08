@@ -9,9 +9,10 @@
     },
     "command": {
         "type": "textbox",
-        "value": "!strike",
+        "value": "!streak",
         "label": "Command",
         "tooltip": "The name of the command.",
         "group": "Advance"
     }
+    
 }
