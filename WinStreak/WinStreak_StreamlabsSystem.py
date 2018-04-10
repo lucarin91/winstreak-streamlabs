@@ -53,7 +53,7 @@ def Execute(data):
            and data.GetParamCount() > 1\
            and data.GetParamCount() < 4\
            and Parent.HasPermission(data.User, _command_permission, _command_info):
-            
+            # TODO: test all the parsing
             # parameter parsing
             param = data.GetParam(1)
             if param == '+':
