@@ -18,7 +18,7 @@ ScriptName = "WinStreak"
 Website = "https://github.com/lucarin91/winstreak-streamlabs"
 Description = "Manage the host win streak on OBS"
 Creator = "lucarin91"
-Version = "1.0.0"
+Version = "2.0.0"
 
 #---------------------------------------
 # Set Variables
@@ -50,36 +50,41 @@ def Execute(data):
     global _win, _loss
     if data.IsChatMessage() or data.IsWhisper():
         if data.GetParam(0).lower() == Command\
-           and data.GetParamCount() == 2\
+           and data.GetParamCount() > 1\
+           and data.GetParamCount() < 4\
            and Parent.HasPermission(data.User, _command_permission, _command_info):
             
-            if data.GetParam(1) == 'reset':
-                # reset win and loss
+            # parameter parsing
+            param = data.GetParam(1)
+            if param == '+':
+                _win += 1
+                Parent.Log(ScriptName, 'add a win')
+            elif param == '-':
+                _loss += 1
+                Parent.Log(ScriptName, 'add a loss')
+            elif param == 'reset':
                 _win, _loss = 0, 0
                 Parent.Log(ScriptName, 'reset win and loss')
             else:
-                # Parse second parameter (+|-[0-9]*)
-                params = re.findall(r'(\+|-)([0-9]*)$', data.GetParam(1))
-                
-                if not params:
-                    # Parameter error
-                    Parent.Log(ScriptName, 'Unknown parameters')       
-                    return
-                
-                sign, num = params[0][0], (int(params[0][1]) if params[0][1] else 1)
-
-                if sign == '+':
-                    # add win
-                    _win += num
-                    Parent.Log(ScriptName, 'add {} win'.format(num))
-                elif sign == '-':
-                    # add loss
-                    _loss += num
-                    Parent.Log(ScriptName, 'add {} loss'.format(num))
-                elif data.GetParam(1) == 'reset':
-                    # reset win and loss
-                    _win, _loss = 0, 0
-                    Parent.Log(ScriptName, 'reset win and loss')
+                # for each parameter
+                for i in range(1, data.GetParamCount()):
+                    param = data.GetParam(i)
+                    # parse parameter with numebers
+                    params = re.findall(r'(\+|-)([0-9]*)$', param)
+                    
+                    # parameter error
+                    if not params:
+                        Parent.Log(ScriptName, 'unknown parameters')
+                        return
+                    
+                    # use parameters to set win or loss
+                    sign, num = params[0][0], int(params[0][1])
+                    if sign == '+':
+                        _win = num
+                        Parent.Log(ScriptName, 'set win to {}'.format(num))
+                    elif sign == '-':
+                        _loss = num
+                        Parent.Log(ScriptName, 'set loss to {}'.format(num))
             write_streak()
 
 #---------------------------------------

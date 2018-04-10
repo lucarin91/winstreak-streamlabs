@@ -7,7 +7,7 @@ Example:
 >> !streak +      // increase win by 1
 >> !streak -      // descrease loss by 1
 >> !streak reset  // reset count
->> !streak +5     // increase win by 5
+>> !streak +5 -3  // set win to 5 and loss to 3
 ```
 
 ## Installation
