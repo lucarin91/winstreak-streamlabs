@@ -48,44 +48,43 @@ def Init():
 #---------------------------------------
 def Execute(data):
     global _win, _loss
-    if data.IsChatMessage() or data.IsWhisper():
-        if data.GetParam(0).lower() == Command\
-           and data.GetParamCount() > 1\
-           and data.GetParamCount() < 4\
-           and Parent.HasPermission(data.User, _command_permission, _command_info):
-            # TODO: test all the parsing
-            # parameter parsing
-            param = data.GetParam(1)
-            if param == '+':
-                _win += 1
-                Parent.Log(ScriptName, 'add a win')
-            elif param == '-':
-                _loss += 1
-                Parent.Log(ScriptName, 'add a loss')
-            elif param == 'reset':
-                _win, _loss = 0, 0
-                Parent.Log(ScriptName, 'reset win and loss')
-            else:
-                # for each parameter
-                for i in range(1, data.GetParamCount()):
-                    param = data.GetParam(i)
-                    # parse parameter with numebers
-                    params = re.findall(r'(\+|-)([0-9]*)$', param)
-                    
-                    # parameter error
-                    if not params:
-                        Parent.Log(ScriptName, 'unknown parameters')
-                        return
-                    
-                    # use parameters to set win or loss
-                    sign, num = params[0][0], int(params[0][1])
-                    if sign == '+':
-                        _win = num
-                        Parent.Log(ScriptName, 'set win to {}'.format(num))
-                    elif sign == '-':
-                        _loss = num
-                        Parent.Log(ScriptName, 'set loss to {}'.format(num))
-            write_streak()
+    count = data.GetParamCount()
+    if (data.IsChatMessage() or data.IsWhisper())\
+       and data.GetParam(0).lower() == Command\
+       and (count > 1 and count < 4)\
+       and Parent.HasPermission(data.User, _command_permission, _command_info):
+        param = data.GetParam(1)
+        # parse increment and reset
+        if count == 2 and param == '+':
+            _win += 1
+            Parent.Log(ScriptName, 'add a win')
+        elif count == 2 and param == '-':
+            _loss += 1
+            Parent.Log(ScriptName, 'add a loss')
+        elif count == 2 and param == 'reset':
+            _win, _loss = 0, 0
+            Parent.Log(ScriptName, 'reset win and loss')
+        else:   
+            # parse set win loss value
+            for i in range(1, count):
+                param = data.GetParam(i)
+                # parse parameter with numebers
+                params = re.findall(r'(\+|-)([0-9]+)$', param)
+                
+                # parameter error
+                if not params:
+                    Parent.Log(ScriptName, 'unknown parameters')
+                    return
+                
+                # use parameters to set win or loss
+                sign, num = params[0][0], int(params[0][1])
+                if sign == '+':
+                    _win = num
+                    Parent.Log(ScriptName, 'set win to {}'.format(num))
+                elif sign == '-':
+                    _loss = num
+                    Parent.Log(ScriptName, 'set loss to {}'.format(num))
+        write_streak()
 
 #---------------------------------------
 # [Required] Tick Function
